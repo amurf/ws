@@ -1,0 +1,14 @@
+{
+  "name": "ws-ui-shared",
+  "version": "0.0.1",
+  "description": "Shared libraries between frontend/backend for WS",
+  "main": "validator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ashley Murphy",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.2"
+  }
+}

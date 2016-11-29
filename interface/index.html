@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" ng-app="ws.ui">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="">
+    <style>
+        em {
+            display: block;
+        }
+        .question {
+            padding: 1em;
+            border: 1px black solid;
+        }
+
+        .question em {
+            padding: 0.5em 0;
+        }
+        .question-errors {
+            background: #de8f8f;
+            padding: 5px;
+            margin-top: 1em;
+        }
+        body {
+            font-family: 'Helvetica';
+        }
+    </style>
+  </head>
+
+  <body ng-controller="TheController">
+      <!-- Pass in the structure and let page directive handle the formatting -->
+      <div class='custom-settings'>
+        <h1>Custom settings</h1>
+        <label>Page:
+            <select ng-options="page as page for page in pages" ng-model="currentPage"></select>
+        </label><br><br>
+        <label>Show WS Page Example:
+            <input ng-model="showWsPage" type="checkbox"></input>
+        </label><br>
+        <label>Show WS Custom Example:
+            <input ng-model="showCustom" ng-init="showCustom = true" type="checkbox"></input>
+        </label><br><br>
+
+        <button ng-click="validatePage(currentPage)">Validate Current Page</button>
+        <button ng-click="validateQuestions(questions)">Validate All Questions</button><br>
+      </div>
+      <div ng-if="showWsPage">
+        <h1>WS-Page directive</h1>
+        <ws-page questions="questionsForPage(currentPage)" page-name="currentPage"></ws-page>
+      </div>
+
+      <h1>Validation Status</h1>
+      <pre>{{ validateModel(questions) }}</pre>
+
+      <div ng-if="showCustom">
+        <!-- Custom HTML mark question-by-question -->
+        <h1>Custom HTML</h1>
+        <h2>Question One Section</h2>
+        <ws-question question="questionsByName['question_one']"></ws-question>
+        <h2>Question Two Section</h2>
+        <ws-question question="questionsByName['question_two']"></ws-question>
+        <hr/>
+        <h2>Orange section</h2>
+        <div style="background-color: orange">
+            <ws-question question="questionsByName['question_three']"></ws-question>
+            <ws-question question="questionsByName['question_four']"></ws-question>
+        </div>
+        <button ng-click="validateQuestions([questionsByName['question_three']])">Validate Question Three</button>
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js"></script>
+
+      <script src="src/page/page.component.js"></script>
+      <script src="src/page/page.controller.js"></script>
+      <script src="src/question-errors/question-errors.component.js"></script>
+      <script src="src/question/question.component.js"></script>
+      <script src="src/select/select.component.js"></script>
+      <script src="src/number/number.component.js"></script>
+      <script src="app.js"></script>
+
+      <script src="node_modules/ws-ui-shared/validator.js"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+<select
+  ng-model="$ctrl.question.value"
+  ng-options="x group by x.group disable when x.isDefault for x in $ctrl.question.options track by x"
+>
+</select>

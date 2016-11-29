@@ -1,0 +1,9 @@
+<div ng-switch="ws.question.type" class='question'>
+  <code ng-if="ws.question.showValue">value: {{ ws.question }}</code>
+  <legend>{{ ws.question.label }}</legend>
+  <em ng-if="ws.question.instructions">{{ ws.question.instructions }}</em>
+
+  <ws-select ng-switch-when="select" question='ws.question'></ws-select>
+  <ws-number ng-switch-when="number" question='ws.question'></ws-number>
+  <ws-question-errors question="ws.question"></ws-question-errors>
+</div>
