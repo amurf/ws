@@ -1,5 +1,4 @@
-var isAngular = (typeof exports === 'undefined');
-
+var isAngular = (typeof angular !== 'undefined');
 (function(_) {
     function Validator() {
         const validatorsFor = {
@@ -25,7 +24,6 @@ var isAngular = (typeof exports === 'undefined');
 
         return exports;
 
-
         function validateModel(questions) {
             function doValidate(value) {
                 return function(result, validatorName) {
@@ -47,7 +45,6 @@ var isAngular = (typeof exports === 'undefined');
                 }
             }
 
-
             let modelErrors = {};
             for (let question of questions) {
                 let validators = question.validators || validatorsFor[question.type];
@@ -58,11 +55,11 @@ var isAngular = (typeof exports === 'undefined');
                     modelErrors[question.name] = errors;
                 }
             }
-
             return modelErrors;
         }
     }
 
+    /* Return module for frontend/backend */
     if (isAngular) {
         angular.module('ws.ui').factory('Validator', Validator);
     } else {
