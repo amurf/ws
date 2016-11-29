@@ -9,14 +9,14 @@ angular.module('ws.ui', [
 
 angular
     .module('ws.ui')
-    .controller('TheController', ['Survey', '$scope', '$http', TheController]);
+    .controller('TheController', ['Survey', 'Validator', '$scope', '$http', TheController]);
 
-function TheController(Survey, $scope, $http) {
+function TheController(Survey, Validator, $scope, $http) {
     angular.extend($scope, {
         config:            Survey.config,
         pages:             Survey.pages,
 
-        validateModel:     validator.validateModel,
+        validateModel:     Validator.validateModel,
 
         validatePage:      validatePage,
         validateQuestions: validateQuestions,

@@ -1,29 +1,28 @@
 var isAngular = (typeof exports === 'undefined');
-
-(function(_, exports){
-	// Example
+(function(_) {
+	/* Example
 	const customValidator = {
 		check: () => !(questions[0].value == questions[1].value),
 		msg:   "Must not be the same",
-	};
-
-	const validatorsFor = {
-		number: [ 'isNotEmpty', 'isNumber' ],
-		select: [ 'isNotEmpty' ],
-	};
-
-	const validatorEnv = {
-		'isNotEmpty': {
-			'check': (value) => !_.isNil(value),
-			'msg':   "Is required",
-		},
-		'isNumber': {
-			'check':  _.isNumber,
-			'msg':   "Must be a number",
-		},
-	};
+	}; */
 
 	function validateModel(questions) {
+        const validatorsFor = {
+            number: [ 'isNotEmpty', 'isNumber' ],
+            select: [ 'isNotEmpty' ],
+        };
+
+        const validatorEnv = {
+            'isNotEmpty': {
+                'check': (value) => !_.isNil(value),
+                'msg':   "Is required",
+            },
+            'isNumber': {
+                'check':  _.isNumber,
+                'msg':   "Must be a number",
+            },
+        };
+
 		function doValidate(value) {
 			return function(result, validatorName) {
 				let validator;
@@ -31,11 +30,6 @@ var isAngular = (typeof exports === 'undefined');
 					validator = validatorEnv[validatorName];
 				} else if (_.isObject(validatorName)) {
 					validator = validatorName;
-				} else if (_.hasOwnProperty(validatorName)) {
-					validator = {
-						check: _[validatorName],
-						msg: 'Validator: ' + validatorName,
-					};
 				} else {
 					console.warn("validator doesn't exist " + validatorName);
 					return result;
@@ -64,11 +58,20 @@ var isAngular = (typeof exports === 'undefined');
 		return modelErrors;
 	}
 
-	/*
-	let result = validateModel(questions);
-	*/
+    let exports;
+    if (isAngular) {
+        exports = {};
+    } else {
+        exports = module.exports = {};
+    }
 
+    _.extend(exports, {
+        validateModel: validateModel,
+    });
 
-	exports.validateModel = validateModel;
-}(isAngular ? _ : require('lodash'), isAngular ? this.validator = {} : exports));
-
+    if (isAngular) {
+        angular.module('ws.ui').factory('Validator', function() {
+            return exports;
+        });
+    }
+}(isAngular ? _ : require('lodash')));
